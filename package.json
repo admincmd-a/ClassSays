@@ -1,0 +1,30 @@
+{
+  "name": "classsays",
+  "version": "1.0.0",
+  "description": "这个项目……",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/admincmd-a/ClassSays.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/admincmd-a/ClassSays/issues"
+  },
+  "homepage": "https://github.com/admincmd-a/ClassSays#readme",
+  "dependencies": {
+    "astro": "^6.1.8"
+  },
+  "devDependencies": {
+    "@rollup/plugin-yaml": "^4.1.2"
+  }
+}
