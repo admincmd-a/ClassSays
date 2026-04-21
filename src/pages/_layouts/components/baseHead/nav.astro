@@ -1,0 +1,224 @@
+---
+// 导航菜单渲染器
+import theme from '../../../../../main.yml';
+
+// 定义导航项的类型（根据 theme.yml 结构）
+interface NavItem {
+  type?: 'search' | 'html' | 'advanced';
+  label?: string;
+  url?: string;
+  icon?: string;
+  children?: NavItem[];
+  html?: string;
+  target?: '_blank' | '_self';
+  hide?: boolean;
+}
+
+// 辅助函数：处理 URL
+const formatUrl = (url?: string) => {
+  if (!url) return '#';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('#')) {
+    return url;
+  }
+  return url;
+};
+
+// 搜索按钮是否启用（可从 theme 读取）
+const searchEnabled = theme.search?.enable ?? true;
+---
+<nav id="nav">
+
+<style>
+    nav#nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 9999;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+    
+    nav#nav.hide {
+        top: -60px;
+    }
+    
+    nav#nav.menus_items {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        right: 0%;
+        top: 0;
+    }
+    
+    nav#nav.menus_item {
+        position: relative;
+        height: 100%;
+    }
+    
+    nav#nav.menus_item.group {
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    nav#nav .menus_items .menus_item {
+        position: relative;
+        display: inline-block;
+        padding: 0 0 0 14px;
+    }
+    #nav .site-page:not(.child)::after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        width: 0;
+        height: 3px;
+        background-color: #80c8f8;
+        content: '';
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+    ::selection {
+      color: #fff;
+      background: #2128bd;
+    }
+    ::selection {
+      background: #00c4b6;
+      color: #f7f7f7;
+    }
+    #page-header.nav-fixed #nav a, #page-header.nav-fixed #nav #toggle-menu {
+      color: var(--font-color);
+      text-shadow: none;
+    }
+    #nav .site-page {
+      position: relative;
+      padding-bottom: 6px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      font-size: 0.78em;
+      cursor: pointer;
+    }
+    #nav a {
+      color: var(--light-grey);
+    }
+    a {
+      color: #99a9bf;
+      text-decoration: none;
+      word-wrap: break-word;
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      transition: all 0.2s;
+      overflow-wrap: break-word;
+    }
+    a {
+      background-color: transparent;
+    }
+    
+</style>
+
+
+{theme.nav.menu.enable && (
+  <div class="menus_items">
+    {theme.nav.menu.items.map((item: NavItem, idx: number) => {
+      // 处理搜索按钮
+      if (item.type === 'search') {
+        return (
+          <div class="menus_item">
+            {searchEnabled && (
+              <a class="site-page social-icon search" href="javascript:openSearch();">
+                <i class={`fa-fw ${item.icon || 'fas fa-search'}`}></i>
+              </a>
+            )}
+          </div>
+        );
+      }
+      
+      // 直接插入 HTML
+      if (item.type === 'html' && item.html) {
+        return (
+          <div class="menus_item" set:html={item.html}>
+            {/* Astro 会安全渲染 HTML 字符串 */}
+          </div>
+        );
+      }
+      
+      // 下拉菜单
+      if (item.children && item.children.length) {
+        const labelText = item.label || '';
+        const iconClass = item.icon || '';
+        const hideClass = item.hide ? 'hide' : '';
+        
+        return (
+          <div class="menus_item">
+            <a class={`site-page group ${hideClass}`} href="javascript:void(0);">
+              {iconClass && <i class={`fa-fw ${iconClass}`}></i>}
+              <span> {labelText}</span>
+              <i class="fas fa-chevron-down"></i>
+            </a>
+            <ul class="menus_item_child">
+              {item.children.map((child: NavItem, childIdx: number) => {
+                const childUrl = formatUrl(child.url);
+                const childIcon = child.icon || '';
+                const childLabel = child.label || '未命名';
+                return (
+                  <li>
+                    <a class="site-page child" href={childUrl}>
+                      {childIcon && <i class={`fa-fw ${childIcon}`}></i>}
+                      <span> {childLabel}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      }
+      
+      // 普通链接（包括 advanced 类型）
+      const url = item.url || '#';
+      const formattedUrl = formatUrl(url);
+      const iconClass = item.icon || '';
+      const labelText = item.label || '';
+      
+      return (
+        <div class="menus_item">
+          <a class="site-page" href={formattedUrl} target={item.target}>
+            {iconClass && <i class={`fa-fw ${iconClass}`}></i>}
+            <span> {labelText}</span>
+          </a>
+        </div>
+      );
+    })}
+  </div>
+)}
+
+</nav>
+
+<script is:inline>
+    let lastScrollTop = 0;
+    let delta = 5; // 滚动超过5px才触发方向变化，避免轻微抖动
+    const menu = document.querySelector('nav#nav');
+    
+    window.addEventListener('scroll', () => {
+        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    
+        if (Math.abs(currentScroll - lastScrollTop) <= delta) return;
+    
+        if (currentScroll > lastScrollTop && currentScroll > 100) {
+            menu.classList.add('hide');   // 滚动超过100px才隐藏
+        } else {
+            menu.classList.remove('hide');
+        }
+        lastScrollTop = currentScroll;
+    });
+</script>

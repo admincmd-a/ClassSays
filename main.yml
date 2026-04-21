@@ -1,0 +1,42 @@
+
+# 顶部菜单栏设置
+# -----------------------------------------
+nav:
+  menu:
+    enable: true
+    items:
+      # 普通链接
+      - label: "首页"
+        url: "/"
+        icon: "fas fa-home"
+      
+      # 搜索按钮（特殊类型）
+      - label: "搜索"
+        type: "search"
+        icon: "fas fa-search"
+      
+      # 普通链接（无图标）
+      - label: "关于"
+        url: "/about"
+      
+      # 下拉菜单（有子项）
+      - label: "班级分类"
+        icon: "fas fa-folder"
+        children:
+          - label: "名人名言"
+            url: "/quotes"
+            icon: "fas fa-quote-left"
+          - label: "硬件维修实录"
+            url: "/repair"
+            icon: "fas fa-microchip"
+      
+      # 高级自定义链接（带额外属性）
+      - label: "外站"
+        type: "advanced"
+        url: "https://example.com"
+        icon: "fas fa-external-link"
+        target: "_blank"
+      
+      # 直接插入 HTML（完全自定义）
+      - type: "html"
+        html: '<div class="custom-badge">🔥 中考倒计时</div>'
