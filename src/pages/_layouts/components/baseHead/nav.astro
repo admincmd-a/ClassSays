@@ -45,32 +45,45 @@ const searchEnabled = theme.search?.enable ?? true;
         top: -60px;
     }
     
-    nav#nav.menus_items {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 100%;
-        right: 0%;
-        top: 0;
+    nav#nav .menus_items {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin: 0;
+      padding: 0 24px;
+      list-style: none;
+      
     }
     
-    nav#nav.menus_item {
-        position: relative;
-        height: 100%;
+    nav#nav .menus_item {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+
     }
     
-    nav#nav.menus_item.group {
+    nav#nav .menus_item.group {
         display: flex;
         align-items: center;
+        /* margin-left: auto;  推到最右边 */
         padding: 0 20px;
         height: 100%;
         cursor: pointer;
     }
+    nav#nav .menus_items {
+      margin-left: auto;
+    }
 
-    nav#nav .menus_items .menus_item {
+    nav#nav .menus_items>.menus_item {
         position: relative;
         display: inline-block;
         padding: 0 0 0 14px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        height: 100%;
+        /* cursor: pointer; */
     }
     #nav .site-page:not(.child)::after {
         position: absolute;
@@ -123,8 +136,158 @@ const searchEnabled = theme.search?.enable ?? true;
     a {
       background-color: transparent;
     }
+    #nav #toggle-menu {
+  display: none;
+  padding: 2px 0 0 6px;
+  vertical-align: top;
+}
+
+#nav #toggle-menu:hover {
+  color: var(--white);
+}
+
+#nav a {
+  color: var(--light-grey);
+}
+
+#nav a:hover {
+  color: var(--white);
+}
+
+#nav .site-name {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+  font-weight: bold;
+}
+
+#nav .menus_items {
+  display: inline;
+}
+
+#nav .menus_items .menus_item {
+  position: relative;
+  display: inline-block;
+  padding: 0 0 0 14px;
+}
+
+#nav .menus_items .menus_item:hover .menus_item_child {
+  display: block;
+}
+
+#nav .menus_items .menus_item:hover > a > i:last-child {
+  transform: rotate(180deg);
+}
+
+#nav .menus_items .menus_item > a > i:last-child {
+  padding: 4px;
+  transition: transform .3s;
+}
+
+#nav .menus_items .menus_item .menus_item_child {
+  position: absolute;
+  right: 0;
+  display: none;
+  margin-top: 8px;
+  padding: 0;
+  width: max-content;
+  border-radius: 5px;
+  background-color: var(--sidebar-bg);
+  box-shadow: 0 5px 20px -4px rgba(0, 0, 0, 0.5);
+  animation: sub_menus .3s .1s ease both;
+}
+
+#nav .menus_items .menus_item .menus_item_child:before {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  content: '';
+}
+
+#nav .menus_items .menus_item .menus_item_child li {
+  list-style: none;
+}
+
+#nav .menus_items .menus_item .menus_item_child li:hover {
+  background: var(--text-bg-hover);
+}
+
+#nav .menus_items .menus_item .menus_item_child li:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#nav .menus_items .menus_item .menus_item_child li:last-child {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#nav .menus_items .menus_item .menus_item_child li a {
+  display: inline-block;
+  padding: 8px 16px;
+  width: 100%;
+  color: var(--font-color) !important;
+  text-shadow: none !important;
+}
+
+#nav.hide-menu #toggle-menu {
+  display: inline-block !important;
+}
+
+#nav.hide-menu #toggle-menu .site-page {
+  font-size: inherit;
+}
+
+#nav.hide-menu .menus_items {
+  display: none;
+}
+
+#nav.hide-menu #search-button span {
+  display: none;
+}
+
+#nav #search-button {
+  display: inline;
+  padding: 0 0 0 14px;
+}
+
+#nav .site-page {
+  position: relative;
+  padding-bottom: 6px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-size: .78em;
+  cursor: pointer;
+}
+
+#nav .site-page:not(.child):after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 0;
+  height: 3px;
+  background-color: #99c2ff; /* 原 lighten(#theme-color, 30%)，这里用近似色，可根据实际主题色调整 */
+  content: '';
+  transition: all .3s ease-in-out;
+}
+
+#nav .site-page:not(.child):hover:after {
+  width: 100%;
+}
+
+/* 自定义属性（如果未定义，可在根元素设置） */
+:root {
+  --dark-black: #000;
+  --theme-color: #3e7eff; /* 示例主题色，请根据实际修改 */
+  --light-grey: #ccc;
+  --white: #fff;
+  --sidebar-bg: #fff;
+  --font-color: #333;
+  --text-bg-hover: #f0f0f0;
+}
     
 </style>
+
 
 
 {theme.nav.menu.enable && (
