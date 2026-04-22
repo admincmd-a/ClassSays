@@ -1,7 +1,125 @@
 ---
-import PAGE_MAIN from '../pages/_layouts/main.astro';
+import PAGE_MAIN from '../pages/_layouts/layout.astro';
 ---
 
 <PAGE_MAIN title="ClassSays - 班级生物发言集">
-    <h1>Welcome to ClassSays!</h1>
+    <h1></h1>
+    <div class="null">
+
+    </div>
+    <div class="item" id="temp">
+        <!-- <span class="item-title">
+            测试用文本
+        </span> -->
+
+        <!-- <hr /> -->
+        <div class="item-content">
+            <p>要么四调，要么死掉，早晚都得掉</p>
+        </div>
+        <div class="item-bottom">
+            <span class="item-author">
+                ——
+                <span class="item-author-name">刘██</span>
+                <span class="span-null">     </span>
+                <datatime datetime="2026-04-19T09:06:00Z">2026/04/19 09:06</datatime>
+            </span>
+        </div>
+        <hr />
+        
+        <div class="comment">
+            <div id="tcomment"></div>
+        </div>
+    </div>
+
+    <div class="item" id="temp">
+        <span class="item-title">
+            测试用文本
+        </span>
+
+        <hr />
+        <div class="item-content">
+            <p>1. If you want to find out about people’s opinions on a product, google \reddit. You’ll get real people arguing, as compared to the SEO’d Google results.</p>
+            <p>2. Some banks charge you $20 a month for an account, others charge you 0. If you’re with one of the former, have a good explanation for what those $20 are buying.</p>
+            <p>3. Things you use for a significant fraction of your life (bed: 1/3rd, office-chair: 1/4th) are worth investing in.</p>
+        </div>
+    </div>
+
+    <div class="item" id="temp">
+        <span class="item-title">
+            测试用文本
+        </span>
+
+        <hr />
+        <div class="item-content">
+            <p>1. If you want to find out about people’s opinions on a product, google \reddit. You’ll get real people arguing, as compared to the SEO’d Google results.</p>
+            <p>2. Some banks charge you $20 a month for an account, others charge you 0. If you’re with one of the former, have a good explanation for what those $20 are buying.</p>
+            <p>3. Things you use for a significant fraction of your life (bed: 1/3rd, office-chair: 1/4th) are worth investing in.</p>
+        </div>
+    </div>
+
+    <div class="item" id="temp">
+        <span class="item-title">
+            测试用文本
+        </span>
+
+        <hr />
+        <div class="item-content">
+            <p>1. If you want to find out about people’s opinions on a product, google \reddit. You’ll get real people arguing, as compared to the SEO’d Google results.</p>
+            <p>2. Some banks charge you $20 a month for an account, others charge you 0. If you’re with one of the former, have a good explanation for what those $20 are buying.</p>
+            <p>3. Things you use for a significant fraction of your life (bed: 1/3rd, office-chair: 1/4th) are worth investing in.</p>
+        </div>
+    </div>
+
+    <style>
+        .item {
+            width: 60%;
+            border-style: solid;
+            padding: 10px;
+            border-radius: 5px;
+            border-width: 1px;
+            border-color: #d5dffa;
+            position: relative;
+            margin: auto; /* Center the item */
+            background-color: #fcfbfa;
+            box-shadow: 2px 2px 3px #c4d6d6;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 20px 22px;
+        }
+
+        .null {
+            height: 100px;
+        }
+
+        .span-null {
+            width: 20px;
+        }
+
+        .comment {
+            margin: 10px 10px;
+        }
+
+        .item-author {
+            margin-left: auto;
+            font-style: italic;
+            font-family:"Times New Roman", Times, serif;
+            align-items: center;
+            display: flex;
+            justify-content: flex-end;
+            margin: 10px 5px;
+        /*    position: absolute;
+            right: 40px;
+            bottom: 15px*/
+        }
+    </style>
+
+    <script is:inline>
+        twikoo.init({
+          envId: 'https://twikoo.admincmd.xyz', // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
+          el: '#tcomment', // 容器元素
+          // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
+          path: "temp", // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
+          lang: 'zh-CN', // 用于手动设定评论区语言，支持的语言列表 https://github.com/twikoojs/twikoo/blob/main/src/client/utils/i18n/index.js
+        })
+    </script>
 </PAGE_MAIN>

@@ -29,254 +29,309 @@ const searchEnabled = theme.search?.enable ?? true;
 <nav id="nav">
 
 <style>
-    nav#nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 60px;
-        background-color: rgba(255, 255, 255, 0.8);
-        z-index: 9999;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease-in-out;
-    }
-    
-    nav#nav.hide {
-        top: -60px;
-    }
-    
-    nav#nav .menus_items {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      margin: 0;
-      padding: 0 24px;
-      list-style: none;
-      
-    }
-    
-    nav#nav .menus_item {
-      position: relative;
-      height: 100%;
-      display: flex;
-      align-items: center;
-
-    }
-    
-    nav#nav .menus_item.group {
-        display: flex;
-        align-items: center;
-        /* margin-left: auto;  推到最右边 */
-        padding: 0 20px;
-        height: 100%;
-        cursor: pointer;
-    }
-    nav#nav .menus_items {
-      margin-left: auto;
-    }
-
-    nav#nav .menus_items>.menus_item {
-        position: relative;
-        display: inline-block;
-        padding: 0 0 0 14px;
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        height: 100%;
-        /* cursor: pointer; */
-    }
-    #nav .site-page:not(.child)::after {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        z-index: -1;
-        width: 0;
-        height: 3px;
-        background-color: #80c8f8;
-        content: '';
-        -webkit-transition: all 0.3s ease-in-out;
-        -moz-transition: all 0.3s ease-in-out;
-        -o-transition: all 0.3s ease-in-out;
-        -ms-transition: all 0.3s ease-in-out;
-        transition: all 0.3s ease-in-out;
-    }
-    ::selection {
-      color: #fff;
-      background: #2128bd;
-    }
-    ::selection {
-      background: #00c4b6;
-      color: #f7f7f7;
-    }
-    #page-header.nav-fixed #nav a, #page-header.nav-fixed #nav #toggle-menu {
-      color: var(--font-color);
-      text-shadow: none;
-    }
-    #nav .site-page {
-      position: relative;
-      padding-bottom: 6px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-      font-size: 0.78em;
-      cursor: pointer;
-    }
-    #nav a {
-      color: var(--light-grey);
-    }
-    a {
-      color: #99a9bf;
-      text-decoration: none;
-      word-wrap: break-word;
-      -webkit-transition: all 0.2s;
-      -moz-transition: all 0.2s;
-      -o-transition: all 0.2s;
-      -ms-transition: all 0.2s;
-      transition: all 0.2s;
-      overflow-wrap: break-word;
-    }
-    a {
-      background-color: transparent;
-    }
-    #nav #toggle-menu {
-  display: none;
-  padding: 2px 0 0 6px;
-  vertical-align: top;
+/* ========== 主导航栏样式 ========== */
+nav#nav {
+    position: fixed;        /* 固定定位，滚动时始终可见 */
+    top: 0;                /* 紧贴顶部 */
+    left: 0;               /* 紧贴左侧 */
+    width: 100%;           /* 全宽 */
+    height: 60px;          /* 固定高度 */
+    background-color: rgba(255, 255, 255, 0.8); /* 半透明白色背景（毛玻璃效果基础） */
+    z-index: 9999;         /* 极高层级，确保位于所有内容之上 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 底部轻微阴影，增强立体感 */
+    transition: all 0.3s ease-in-out; /* 所有属性变化时的平滑过渡动画 */
+    display: flex;
+    align-items: center;      /* 垂直居中 */
+    justify-content: flex-start; /* 左侧保留空间（如站点名称） */
 }
 
-#nav #toggle-menu:hover {
-  color: var(--white);
+/* 隐藏导航栏的样式（通过JS添加.hide类实现上滑隐藏效果） */
+nav#nav.hide {
+    top: -60px;            /* 向上移动自身高度，完全移出可视区域 */
 }
 
-#nav a {
-  color: var(--light-grey);
+/* ========== 菜单容器 ========== */
+nav#nav .menus_items {
+    display: flex;          /* 弹性布局 */
+    align-items: center;    /* 垂直居中对齐 */
+    height: 100%;          /* 继承父元素高度（60px） */
+    margin-left: auto;
+    padding: 0 24px;       /* 左右内边距24px，上下为0 */
+    list-style: none;      /* 移除列表默认样式（项目符号） */
+    justify-content: flex-end;  /* 从左开始排列，不强行拉开 */
+    font-size: 1.1em;        /* 字体大小 */
+    position: relative;
+    top: 0.2em;
 }
-
-#nav a:hover {
-  color: var(--white);
-}
-
-#nav .site-name {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
-  font-weight: bold;
-}
-
-#nav .menus_items {
-  display: inline;
-}
-
 #nav .menus_items .menus_item {
-  position: relative;
-  display: inline-block;
-  padding: 0 0 0 14px;
+    margin-left: 0;
+    margin-right: 0;
+    /* 保留原有的左右内边距（20px），此时项之间的总间隙 = gap + 左右内边距之和 */
+    /* 若希望间隙完全等于 gap 值，可取消下面的注释，并将内边距转移到链接元素上 */
+    /*
+    padding-left: 0;
+    padding-right: 0;
+    */
 }
 
-#nav .menus_items .menus_item:hover .menus_item_child {
-  display: block;
+
+
+/* 单个菜单项（一级菜单） */
+nav#nav .menus_item {
+    position: relative;     /* 为绝对定位的子元素（如下拉菜单）提供参考系 */
+    height: 100%;          /* 与导航栏等高 */
+    display: flex;         /* 弹性布局 */
+    align-items: center;   /* 垂直居中 */
+    margin-left: auto;      /* 自动左边距，将菜单推到右侧（Flex右对齐技巧） */
 }
 
-#nav .menus_items .menus_item:hover > a > i:last-child {
-  transform: rotate(180deg);
+/* 特殊：带分组功能的菜单项（比如右侧的个人中心区域） */
+nav#nav .menus_item.group {
+    display: flex;
+    align-items: center;
+    /* margin-left: auto;被注释掉，若启用会将此元素推到最右侧 */
+    padding: 0 20px;       /* 左右内边距20px */
+    height: 100%;
+    cursor: pointer;       /* 鼠标变为手型，提示可点击 */
 }
 
-#nav .menus_items .menus_item > a > i:last-child {
-  padding: 4px;
-  transition: transform .3s;
+/* 直接子菜单项（一级菜单项）的样式细化 */
+nav#nav .menus_items>.menus_item {
+    position: relative;
+    display: inline-block;  /* 行内块级，可水平排列 */
+    padding: 10px 10px 0px 14px;    /* 上右下左：0 0 0 14px（左边距14px） */
+    display: flex;          /* 重新声明为flex（覆盖上面的inline-block？可能存在冗余） */
+    align-items: center;
+    padding: 0px 20px;        /* 上下0，左右20px（覆盖了上一行padding声明） */
+    height: 100%;
+
+    /* cursor: pointer; 被注释，可能希望只有链接本身可点 */
 }
 
-#nav .menus_items .menus_item .menus_item_child {
-  position: absolute;
-  right: 0;
-  display: none;
-  margin-top: 8px;
-  padding: 0;
-  width: max-content;
-  border-radius: 5px;
-  background-color: var(--sidebar-bg);
-  box-shadow: 0 5px 20px -4px rgba(0, 0, 0, 0.5);
-  animation: sub_menus .3s .1s ease both;
+/* ========== 链接与交互效果 ========== */
+/* 非子菜单项（一级菜单项）的下划线动画效果 */
+#nav .site-page:not(.child)::after {
+    position: absolute;     /* 绝对定位，相对于 .site-page 元素 */
+    bottom: 0;              /* 位于底部 */
+    left: 0;                /* 从左边缘开始 */
+    z-index: -1;            /* 置于文字下层（z-index负值） */
+    width: 0;               /* 初始宽度0，配合过渡实现从无到有 */
+    height: 3px;            /* 下划线高度3px */
+    background-color: #80c8f8; /* 淡蓝色下划线 */
+    content: '';            /* 伪元素必需的内容属性 */
+    transition: all 0.3s ease-in-out; /* 宽度变化时的过渡动画 */
 }
 
-#nav .menus_items .menus_item .menus_item_child:before {
-  position: absolute;
-  top: -8px;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  content: '';
+/* 全局文本选择样式（覆盖，后面又被另一条覆盖） */
+::selection {
+    color: #fff;            /* 选中文字白色 */
+    background: #2128bd;    /* 深蓝色背景 */
 }
 
-#nav .menus_items .menus_item .menus_item_child li {
-  list-style: none;
+/* 覆盖上一条，最终生效的是青绿色背景 */
+::selection {
+    background: #00c4b6;    /* 青绿色选中背景 */
+    color: #f7f7f7;         /* 浅灰白色文字 */
 }
 
-#nav .menus_items .menus_item .menus_item_child li:hover {
-  background: var(--text-bg-hover);
+/* 固定导航栏模式下（通过JS添加.nav-fixed类）的链接颜色调整 */
+#page-header.nav-fixed #nav a, 
+#page-header.nav-fixed #nav #toggle-menu {
+    color: var(--font-color);   /* 使用CSS变量定义的颜色 */
+    text-shadow: none;          /* 移除文字阴影 */
 }
 
-#nav .menus_items .menus_item .menus_item_child li:first-child {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-#nav .menus_items .menus_item .menus_item_child li:last-child {
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-#nav .menus_items .menus_item .menus_item_child li a {
-  display: inline-block;
-  padding: 8px 16px;
-  width: 100%;
-  color: var(--font-color) !important;
-  text-shadow: none !important;
-}
-
-#nav.hide-menu #toggle-menu {
-  display: inline-block !important;
-}
-
-#nav.hide-menu #toggle-menu .site-page {
-  font-size: inherit;
-}
-
-#nav.hide-menu .menus_items {
-  display: none;
-}
-
-#nav.hide-menu #search-button span {
-  display: none;
-}
-
-#nav #search-button {
-  display: inline;
-  padding: 0 0 0 14px;
-}
-
+/* 导航链接基础样式 */
 #nav .site-page {
-  position: relative;
-  padding-bottom: 6px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  font-size: .78em;
-  cursor: pointer;
+    position: relative;
+    padding-bottom: 6px;        /* 下内边距，为下划线留空间 */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* 轻微深色阴影，增加可读性 */
+    font-size: 0.78em;          /* 相对父元素字体缩小至78% */
+    cursor: pointer;            /* 手型指针 */
 }
 
+/* 导航栏链接颜色（使用CSS变量 --light-grey） */
+#nav a {
+    color: var(--light-grey);
+}
+
+/* 全局链接样式 */
+a {
+    color: #99a9bf;             /* 灰蓝色 */
+    text-decoration: none;      /* 移除下划线 */
+    word-wrap: break-word;      /* 允许长单词换行 */
+    transition: all 0.2s;       /* 过渡动画 */
+    overflow-wrap: break-word;  /* 现代浏览器换行属性 */
+}
+
+/* 重置a标签背景（清除可能的默认背景） */
+a {
+    background-color: transparent;
+}
+
+/* ========== 移动端/特殊模式的菜单切换按钮 ========== */
+#nav #toggle-menu {
+    display: none;              /* 默认隐藏，用于宽屏显示完整菜单 */
+    padding: 2px 0 0 6px;      /* 上2px，左6px的内边距微调位置 */
+    vertical-align: top;       /* 顶部对齐 */
+}
+
+/* 切换按钮悬停效果 */
+#nav #toggle-menu:hover {
+    color: var(--white);        /* 变为白色 */
+}
+
+/* 导航链接悬停效果 */
+#nav a:hover {
+    color: var(--white);        /* 悬停时变白 */
+}
+
+/* 站点名称特殊样式（加粗+阴影） */
+#nav .site-name {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15); /* 更明显的阴影 */
+    font-weight: bold;          /* 粗体 */
+}
+
+/* 重复声明 .menus_items（之前已存在，可能导致样式覆盖） */
+#nav .e .menus_items {
+    /* display: inline;            从flex改为inline，会改变布局，可能是为了特殊适配 */
+}
+
+/* 再次细化一级菜单项样式 */
+#nav .menus_items .menus_item {
+    position: relative;
+    display: inline-block;
+    padding: 0 0 0 14px;
+}
+
+/* 鼠标悬停时显示子菜单 */
+#nav .menus_items .menus_item:hover .menus_item_child {
+    display: block;             /* 子菜单从隐藏变为块级显示 */
+}
+
+/* 悬停时旋转下拉箭头图标 */
+#nav .menus_items .menus_item:hover > a > i:last-child {
+    transform: rotate(180deg);  /* 旋转180度 */
+}
+
+/* 下拉箭头图标的默认样式（预留旋转动画） */
+#nav .menus_items .menus_item > a > i:last-child {
+    padding: 4px;
+    transition: transform .3s;  /* 旋转过渡动画 */
+}
+
+/* ========== 下拉子菜单样式 ========== */
+#nav .menus_items .menus_item .menus_item_child {
+    position: absolute;
+    top: 32px;
+    right: 0;                   /* 右对齐父元素 */
+    display: none;              /* 默认隐藏 */
+    margin-top: 8px;            /* 与菜单项的间距 */
+    padding: 0;                 /* 重置内边距 */
+    width: max-content;         /* 宽度由内容撑开 */
+    border-radius: 5px;         /* 圆角边框 */
+    background-color: var(--sidebar-bg); /* 使用侧边栏背景色变量 */
+    box-shadow: 0 5px 20px -4px rgba(0, 0, 0, 0.5); /* 深层阴影效果 */
+    animation: sub_menus .3s .1s ease both; /* 入场动画（需定义@keyframes sub_menus） */
+}
+
+/* 子菜单上方不可见的可悬停区域（防止鼠标移出时子菜单消失） */
+#nav .menus_items .menus_item .menus_item_child:before {
+    position: absolute;
+    top: -8px;                  /* 向上延伸8px */
+    left: 0;
+    width: 100%;
+    height: 20px;               /* 高度20px的隐形区域 */
+    content: '';
+}
+
+/* 子菜单项列表样式重置 */
+#nav .menus_items .menus_item .menus_item_child li {
+    list-style: none;           /* 移除项目符号 */
+}
+
+/* 子菜单项悬停背景效果 */
+#nav .menus_items .menus_item .menus_item_child li:hover {
+    background: var(--text-bg-hover); /* 使用悬停背景色变量 */
+}
+
+/* 第一个子菜单项圆角（顶部） */
+#nav .menus_items .menus_item .menus_item_child li:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+/* 最后一个子菜单项圆角（底部） */
+#nav .menus_items .menus_item .menus_item_child li:last-child {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+/* 子菜单中的链接样式 */
+#nav .menus_items .menus_item .menus_item_child li a {
+    display: inline-block;
+    padding: 8px 16px;          /* 内边距8px上下，16px左右 */
+    width: 100%;                /* 占满父容器宽度 */
+    color: var(--font-color) !important; /* 强制使用字体颜色变量 */
+    text-shadow: none !important;        /* 强制移除文字阴影 */
+}
+
+/* ========== 隐藏菜单模式（用于移动端适配） ========== */
+/* 当添加.hide-menu类时，显示切换按钮 */
+#nav.hide-menu #toggle-menu {
+    display: inline-block !important;
+}
+
+/* 隐藏菜单模式下，切换按钮内的文字大小恢复正常（不缩放） */
+#nav.hide-menu #toggle-menu .site-page {
+    font-size: inherit;
+}
+
+/* 隐藏菜单模式下，隐藏菜单项容器 */
+#nav.hide-menu .menus_items {
+    display: none;
+}
+
+/* 隐藏菜单模式下，搜索按钮中的文字被隐藏（只保留图标） */
+#nav.hide-menu #search-button span {
+    display: none;
+}
+
+/* 搜索按钮样式 */
+#nav #search-button {
+    display: inline;
+    padding: 0 0 0 14px;
+}
+
+/* 重复声明.site-page样式（可能与前面略有差异，此处保留了text-shadow，但缺少下划线部分定义） */
+#nav .site-page {
+    position: relative;
+    padding-bottom: 6px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-size: .78em;
+    cursor: pointer;
+}
+
+/* 下划线动画效果的重新声明（颜色不同，可能用于不同主题） */
 #nav .site-page:not(.child):after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  width: 0;
-  height: 3px;
-  background-color: #99c2ff; /* 原 lighten(#theme-color, 30%)，这里用近似色，可根据实际主题色调整 */
-  content: '';
-  transition: all .3s ease-in-out;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 0;
+    height: 3px;
+    background-color: #99c2ff;  /* 另一种淡蓝色（原注释中为 lighten(#theme-color, 30%)） */
+    content: '';
+    transition: all .3s ease-in-out;
 }
 
+/* 悬停时下划线宽度变为100%，完成动画 */
 #nav .site-page:not(.child):hover:after {
-  width: 100%;
+    width: 100%;
 }
 
 /* 自定义属性（如果未定义，可在根元素设置） */
-:root {
+:root[data-theme="dark"] {
   --dark-black: #000;
   --theme-color: #3e7eff; /* 示例主题色，请根据实际修改 */
   --light-grey: #ccc;
@@ -285,10 +340,26 @@ const searchEnabled = theme.search?.enable ?? true;
   --font-color: #333;
   --text-bg-hover: #f0f0f0;
 }
+
+:root[data-theme="light"] {
+  --dark-black: #000;
+  --theme-color: #3e7eff; /* 示例主题色，请根据实际修改 */
+  --light-grey: #ccc;
+  --white: #000000;
+  --sidebar-bg: #fcfcfc;
+  --font-color: #ececec;
+  --text-bg-hover: #2c2c2c;
+}
     
+.site-name {
+  font-size: 1.3em;
+  position: relative;
+  left: 1.3em;
+  
+}
 </style>
 
-
+<span class="site-name">{theme.nav.title}</span>
 
 {theme.nav.menu.enable && (
   <div class="menus_items">
@@ -322,7 +393,7 @@ const searchEnabled = theme.search?.enable ?? true;
         const hideClass = item.hide ? 'hide' : '';
         
         return (
-          <div class="menus_item">
+          <div class="menus_item group">
             <a class={`site-page group ${hideClass}`} href="javascript:void(0);">
               {iconClass && <i class={`fa-fw ${iconClass}`}></i>}
               <span> {labelText}</span>

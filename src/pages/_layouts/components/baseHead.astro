@@ -4,4 +4,20 @@ import NAV_MENU from '../components/baseHead/nav.astro';
 ---
 <header>
     <NAV_MENU />
+    <div id="background" class="background">
+
+    </div>
 </header>
+
+<style>
+    .background 
+    {
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: -99;
+        background-color: #eef6f8;
+    }
+</style>
