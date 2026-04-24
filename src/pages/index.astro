@@ -2,29 +2,40 @@
 import PAGE_MAIN from '../pages/_layouts/layout.astro';
 ---
 
-<PAGE_MAIN title="ClassSays - 班级生物发言集">
+<PAGE_MAIN title="ClassSays - 班级奇怪发言集">
     <h1></h1>
     <div class="null">
 
     </div>
-    <!-- <div class="item" id="temp">
+    <div class="item">
+        <span class="item-title">
+            警告 - WARNING
+        </span>
+        <hr />
         <div class="item-content">
-            <p>要么四调，要么死掉，早晚都得掉</p>
+            <p>- 本站内容纯属班级内部娱乐，不构成任何考试建议。各种奇怪言论是艺术表达，请勿模仿。</p>
+            <p>- 本网站所有语录██████发言者口头授权</p>
+            <p>- 请勿在本站发表任何违反法律法规的内容。</p>
+            <p>- 如有冒犯或侵权，请发送邮件到 <a href="mailto:admin@admincmd.xyz">admin@admincmd.xyz</a> </p>
+            <p>  更多内容请查看 <a href="/disclaimer">免责声明</a> 及 <a href="/privacy">隐私政策</a></p>
+        </div>
+    </div>
+    <div class="item" id="temp">
+        <div class="item-content">
+            <p>我是废物。</p>
         </div>
         <div class="item-bottom">
             <span class="item-author">
                 ——
-                <span class="item-author-name">刘██</span>
+                <span class="item-author-name">???</span>
                 <span class="span-null">     </span>
-                <datatime datetime="2026-04-19T09:06:00Z">2026/04/19 09:06</datatime>
+                <datatime datetime="2026-03-27T12:04:50Z">2026/03/27 12:04:50</datatime>
             </span>
         </div>
         <hr />
         
-        <div class="comment">
-            <div id="tcomment"></div>
-        </div>
-    </div> -->
+        <div id="id-comment"></div>
+    </div>
 
     <div class="item" id="temp">
         <div class="item-content">
@@ -46,14 +57,12 @@ import PAGE_MAIN from '../pages/_layouts/layout.astro';
 
     <div class="item" id="temp">
         <span class="item-title">
-            测试用文本
+            
         </span>
 
-        <hr />
+        <!-- <hr /> -->
         <div class="item-content">
-            <p>1. If you want to find out about people’s opinions on a product, google \reddit. You’ll get real people arguing, as compared to the SEO’d Google results.</p>
-            <p>2. Some banks charge you $20 a month for an account, others charge you 0. If you’re with one of the former, have a good explanation for what those $20 are buying.</p>
-            <p>3. Things you use for a significant fraction of your life (bed: 1/3rd, office-chair: 1/4th) are worth investing in.</p>
+            <p>今天钟**拿班主任的剪刀刮鞋</p>
         </div>
     </div>
 
@@ -70,20 +79,9 @@ import PAGE_MAIN from '../pages/_layouts/layout.astro';
         </div>
     </div>
 
-    <div class="item" id="temp">
-        <span class="item-title">
-            测试用文本
-        </span>
+    
 
-        <hr />
-        <div class="item-content">
-            <p>1. If you want to find out about people’s opinions on a product, google \reddit. You’ll get real people arguing, as compared to the SEO’d Google results.</p>
-            <p>2. Some banks charge you $20 a month for an account, others charge you 0. If you’re with one of the former, have a good explanation for what those $20 are buying.</p>
-            <p>3. Things you use for a significant fraction of your life (bed: 1/3rd, office-chair: 1/4th) are worth investing in.</p>
-        </div>
-    </div>
-
-    <style>
+    <style is:global>
         .item {
             width: 60%;
             border-style: solid;
@@ -123,6 +121,10 @@ import PAGE_MAIN from '../pages/_layouts/layout.astro';
         /*    position: absolute;
             right: 40px;
             bottom: 15px*/
+        }
+
+        .item-title {
+            font-size: large;
         }
     </style>
 
