@@ -26,6 +26,7 @@ const formatUrl = (url?: string) => {
 // 搜索按钮是否启用（可从 theme 读取）
 const searchEnabled = theme.search?.enable ?? true;
 ---
+<!-- ---------------------------------------------------------- -->
 <nav id="nav">
 
 <style>
@@ -36,9 +37,9 @@ nav#nav {
     left: 0;               /* 紧贴左侧 */
     width: 100%;           /* 全宽 */
     height: 60px;          /* 固定高度 */
-    background-color: rgba(255, 255, 255, 0.8); /* 半透明白色背景（毛玻璃效果基础） */
+    background-color: var(--v-background); /* 半透明白色背景（毛玻璃效果基础） */
     z-index: 9999;         /* 极高层级，确保位于所有内容之上 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 底部轻微阴影，增强立体感 */
+    box-shadow: 0 2px 4px var(--v-shadow); /* 底部轻微阴影，增强立体感 */
     transition: all 0.3s ease-in-out; /* 所有属性变化时的平滑过渡动画 */
     display: flex;
     align-items: center;      /* 垂直居中 */
@@ -117,7 +118,7 @@ nav#nav .menus_items>.menus_item {
     z-index: -1;            /* 置于文字下层（z-index负值） */
     width: 0;               /* 初始宽度0，配合过渡实现从无到有 */
     height: 3px;            /* 下划线高度3px */
-    background-color: #80c8f8; /* 淡蓝色下划线 */
+    background-color: var(--selection) ;/* #80c8f8;  淡蓝色下划线 */
     content: '';            /* 伪元素必需的内容属性 */
     transition: all 0.3s ease-in-out; /* 宽度变化时的过渡动画 */
 }
@@ -137,7 +138,7 @@ nav#nav .menus_items>.menus_item {
 /* 固定导航栏模式下（通过JS添加.nav-fixed类）的链接颜色调整 */
 #page-header.nav-fixed #nav a, 
 #page-header.nav-fixed #nav #toggle-menu {
-    color: var(--font-color);   /* 使用CSS变量定义的颜色 */
+    color: var(--text);   /* 使用CSS变量定义的颜色 */
     text-shadow: none;          /* 移除文字阴影 */
 }
 
@@ -145,7 +146,7 @@ nav#nav .menus_items>.menus_item {
 #nav .site-page {
     position: relative;
     padding-bottom: 6px;        /* 下内边距，为下划线留空间 */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* 轻微深色阴影，增加可读性 */
+    text-shadow: 1px 1px 2px var(--text-shadow); /* 轻微深色阴影，增加可读性 */
     font-size: 0.78em;          /* 相对父元素字体缩小至78% */
     cursor: pointer;            /* 手型指针 */
 }
@@ -178,17 +179,17 @@ a {
 
 /* 切换按钮悬停效果 */
 #nav #toggle-menu:hover {
-    color: var(--white);        /* 变为白色 */
+    /* color: var(--white);        变为白色 */
 }
 
 /* 导航链接悬停效果 */
 #nav a:hover {
-    color: var(--white);        /* 悬停时变白 */
+    /* color: var(--white);        悬停时变白 */
 }
 
 /* 站点名称特殊样式（加粗+阴影） */
 #nav .site-name {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15); /* 更明显的阴影 */
+    text-shadow: 2px 2px 4px var(--text-shadow); /* 更明显的阴影 */
     font-weight: bold;          /* 粗体 */
 }
 
@@ -230,8 +231,8 @@ a {
     padding: 0;                 /* 重置内边距 */
     width: max-content;         /* 宽度由内容撑开 */
     border-radius: 5px;         /* 圆角边框 */
-    background-color: var(--sidebar-bg); /* 使用侧边栏背景色变量 */
-    box-shadow: 0 5px 20px -4px rgba(0, 0, 0, 0.5); /* 深层阴影效果 */
+    background-color: var(--background); /* 使用侧边栏背景色变量 */
+    box-shadow: 0 5px 20px -4px var(--menu-background); /* 深层阴影效果 */
     animation: sub_menus .3s .1s ease both; /* 入场动画（需定义@keyframes sub_menus） */
 }
 
@@ -307,7 +308,7 @@ a {
 #nav .site-page {
     position: relative;
     padding-bottom: 6px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px var(--text-shadow);
     font-size: .78em;
     cursor: pointer;
 }

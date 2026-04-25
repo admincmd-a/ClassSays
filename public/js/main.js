@@ -396,7 +396,7 @@ const lightDarkTheme = (() => {
          * @param {boolean} enableSnackbar 是否显示切换提示，缺省值为 true
          */
         toggleTheme: (enableSnackbar = true) => {
-            if (!isBoolean(enableSnackbar)) enableSnackbar = true;
+            if (!typeof enableSnackbar === "number") enableSnackbar = true;
             switchTheme(enableSnackbar, true);
         },
 
@@ -458,8 +458,12 @@ function fetchSaysData() {
         .then((data) => {
             console.log(data);
             const element = document.querySelector("main");
-            for (let i = 0; i < data.length; i++) {
-                const sayItem = data[i];
+            for (let i = data.length; i >= 0; i--) {
+                let sayItem = data[i - 1];
+                if (!sayItem.title) sayItem.title = "";
+                if (!sayItem.content) sayItem.content = "";
+                if (!sayItem.author) sayItem.author = "???";
+                if (!sayItem.time) sayItem.time = "";
                 element.innerHTML += retureItem(sayItem.title, sayItem.content, sayItem.author, sayItem.time, i);
             }
         })
@@ -470,7 +474,12 @@ function fetchSaysData() {
 
 
 function retureItem(title, content, author, time, id) {
-    const classTime = new Date(time).toISOString();
+    let classTime;
+    try {
+        classTime = new Date(time).toISOString() || "";
+    } catch {
+        classTime = "";
+    }
     return `
     <div class="item" id="item-${id}">
         ${title === "" ? "" : `<div class="item-title">${title}</div><hr />`}

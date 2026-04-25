@@ -20,6 +20,9 @@ nav:
       - label: "关于"
         url: "/about"
         icon: "fa-solid fa-circle-info"
+      - label: "切换夜间模式(临时)"
+        url: "javascript:lightDarkTheme.toggleTheme();"
+        icon: "fa-solid fa-moon"
       
       # 下拉菜单（有子项）
       # - label: "班级分类"

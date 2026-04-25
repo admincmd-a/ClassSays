@@ -7,7 +7,77 @@
 </style>
 
 <style is:global>
+    :root[data-theme="light"], :root {
+        --main:  #5ba838;
+        --main2: #3a7429;
+        --contrast:  #12090e;
+        --text:  #0e1422;
+        --selection: #3dcefd;
+        --background: #f7f4ed;
+        --background2: #c4d6d6;
+        --scrollbar: #2a68bc;/* 青藍の空 遥か彼方 青(蔚)蓝天空遥远彼端 */
+        --border: #d5dffa;
+
+        --v-background: rgba(255, 255, 255, 0.8);
+        --v-shadow: rgba(0, 0, 0, 0.1);
+        --text-shadow: rgba(0, 0, 0, 0.3);
+        --menu-background: rgba(0, 0, 0, 0.5);
+        --shadow: #949396;
+
+    }
+
+    :root[data-theme="dark"] {
+        --main:  #225036;
+        --main2: #3a7429;
+        --contrast:  #f7f4ed;
+        --text:  #d7cfc2;
+        --selection: #174f7e;
+        --background: #12090e;
+        --background2: #292a2f;
+        --scrollbar: #174f7e;
+        --border: #2b333e;
+
+        --v-background: rgba(255, 255, 255, 0.8);
+        --v-shadow: rgba(0, 0, 0, 0.1);
+        --text-shadow: rgba(0, 0, 0, 0.3);
+        --menu-background: rgba(0, 0, 0, 0.5);
+        --shadow: #494949;
+    }
+
+    h1,h2,h3,h4,h5,h6,div,span,p {
+        color: var(--text);
+    }
+
     :root {
-        
+      --transition-duration: 0.2s;
+      --transition-timing: ease;
+    }
+
+    /* 对会变化的属性开启过渡 */
+    body, .card, .button, .link, * {
+      transition: background-color var(--transition-duration) var(--transition-timing),
+                  color var(--transition-duration) var(--transition-timing),
+                  border-color var(--transition-duration) var(--transition-timing);
+    }
+
+    ::selection {
+        background: var(--selection); /* #00c4b6;    青绿色选中背景 */
+        /* color: #f7f7f7;         浅灰白色文字 */
+    }
+
+    [data-theme="light"] .light-hidden {
+        visibility: hidden;
+    }
+
+    [data-theme="dark"] .dark-hidden {
+        visibility:hidden;
+    }
+
+    [data-theme="light"] .light-none {
+        display:none;
+    }
+
+    [data-theme="dark"] .dark-none {
+        display:none;
     }
 </style>
